@@ -1,3 +1,4 @@
+#-*- encoding:utf-8-*-
 __author__ = 'wangss'
 keyword = ['INSERT', 'COMMENT', 'ALTER']
 sencondKey = ['ADD', 'MODIFY', 'INTO', 'ON']
@@ -22,7 +23,7 @@ def insertparse(string):
 
 def alterparse(string):
     for i in string.split():
-        for sencond in sencondKey:
+        for sencond in sencondKey:#只校验第一个字
             if i == sencond:
                 if i == sencondKey[0]:
                     alteradd(string, i)
@@ -30,6 +31,7 @@ def alterparse(string):
                     alteradd(string, i)
                 else:
                     pass
+            break
 
 
 # 增加数据库某列
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     sourcefilepath = 'D:/test.log'
     sourcefile = open(sourcefilepath)
     # outputfile = open(outputfilepath)
-    for i in sourcefile.readlines():  #暂时只支持单行文件，多行存在sql校验问题,校验待补充
+    for i in sourcefile.readlines():  # 暂时只支持单行文件，多行存在sql校验问题,校验待补充
         parse(i)
     sourcefile.close()
     # outputfile.close()
