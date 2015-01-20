@@ -38,6 +38,7 @@ if __name__ == '__main__':
     args = sys.argv
     if len(args) == 2:
         file_path = args[1]
+        result_path = 'D:\\sql_result.sql'
     elif len(args) == 3:
         file_path = args[1]
         result_path = args[2]
