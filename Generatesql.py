@@ -6,7 +6,7 @@ import sys
 def addcolumn(file_cont, result_path_cont):
     table_name_list = []
     for i in file_cont:
-        if len(i.split(' ')) == 1:  # 说明是表名
+        if len(i.strip('\n').strip(' ').split(' ')) == 1:  # 说明是表名
             table_name_list.append(i.strip('\n'))
         else:
             cont = i.split(' ')
