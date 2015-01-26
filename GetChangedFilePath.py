@@ -3,11 +3,10 @@ __author__ = 'wangss'
 import os
 import time
 
-
 def getchangepath(pathlist, filetype):
     i = len(pathlist)
-    name = time.strftime('%Y-%m-%d %H-%I:%M:%S', time.localtime(time.time()))
-    writefile = open('D:\\' + name + '.log', 'w')
+    t = time.strftime('%Y-%m-%d %I-%M-%S', time.localtime(time.time()))
+    writefile = open('D:\\' + t + '.log', 'w+')
     changefileamount = 0
     for j in range(i):
         path = pathlist[j]
@@ -21,3 +20,7 @@ def getchangepath(pathlist, filetype):
     print '修改文件总数' + str(changefileamount)
     writefile.write('修改文件总数' + str(changefileamount) + '\n')
     writefile.close()
+
+
+getchangepath(['F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\src', 'F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\WebContent\jsp',
+               'F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\WebContent\jsp'], ['.java', '.js', '.jsp'])
