@@ -10,7 +10,7 @@ def addcolumn(file_cont, result_path_cont):
             table_name_list.append(i.strip('\n'))
         else:
             cont = i.split(' ')
-            table_name = table_name_list[-1].strip('\n')
+            table_name = table_name_list[-1].strip('\n').strip(' ')
             column_name = cont[1].strip('\n')
             column_type = cont[2].strip('\n')
             comment = cont[0].strip('\n')
