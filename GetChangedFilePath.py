@@ -20,7 +20,3 @@ def getchangepath(pathlist, filetype):
     print '修改文件总数' + str(changefileamount)
     writefile.write('修改文件总数' + str(changefileamount) + '\n')
     writefile.close()
-
-
-getchangepath(['F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\src', 'F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\WebContent\jsp',
-               'F:\Inspur\qcjr\QCJR_SRC\DEV\CFS_v0.2\WebContent\jsp'], ['.java', '.js', '.jsp'])
