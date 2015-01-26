@@ -3,6 +3,7 @@ __author__ = 'wangss'
 import os
 import time
 
+
 def getchangepath(pathlist, filetype):
     i = len(pathlist)
     t = time.strftime('%Y-%m-%d %I-%M-%S', time.localtime(time.time()))
