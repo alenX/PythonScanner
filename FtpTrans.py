@@ -14,13 +14,13 @@ class ConfContext(object):
             for i in fp:
                 l = i.split('=')
                 if len(l) != 2:
-                    raise IndexError
+                    continue
                 cfcont[l[0]] = l[1].strip()[1:-1]
             return cfcont
 
 
 class SftpTrans(object):
-    def __int__(self, ip, user, pw):
+    def __init__(self, ip, user, pw):
         self.ip = ip
         self.user = user
         self.pw = pw
@@ -53,6 +53,10 @@ localoutjspath = confmap['localoutjspath']
 remotejavapath = confmap['remotejavapath']
 remotejspath = confmap['remotejspath']
 
+ip = confmap['ip']
+user = confmap['user']
+pw = confmap['pw']
+
 changedjava = SftpTrans.getchangefiles(localjavapath, '.java')
 changedjs = SftpTrans.getchangefiles(localjspath, '.js')
 changedjsp = SftpTrans.getchangefiles(localjspath, '.jsp')
@@ -74,5 +78,4 @@ for j in SftpTrans.getoutputfile(changedjsp, localjspath, localoutjspath):
                                                 :-1]))[1:]
     files[j] = remotepath
 
-for k in files.keys():
-    print k, files[k]
+st = SftpTrans(ip, user, pw)
