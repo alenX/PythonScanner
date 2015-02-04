@@ -15,7 +15,10 @@ class ConfContext(object):
                 l = i.split('=')
                 if len(l) != 2:
                     continue
-                cfcont[l[0]] = l[1].strip()[1:-1]
+                if l[0] in ['ip', 'user', 'pw']:
+                    cfcont[l[0]] = l[1].strip()
+                else:
+                    cfcont[l[0]] = l[1].strip()[1:-1]
             return cfcont
 
 
@@ -63,6 +66,7 @@ changedjsp = SftpTrans.getchangefiles(localjspath, '.jsp')
 
 files = {}
 for j in SftpTrans.getoutputfile(changedjava, localjavapath, localoutjavapath):
+    print j
     temppath = ''.join(map(lambda x: '/' + x, localoutjavapath.split('/'))[:-2])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejavapath).split('/')[
                                                 :-1]))[1:]
@@ -79,3 +83,10 @@ for j in SftpTrans.getoutputfile(changedjsp, localjspath, localoutjspath):
     files[j] = remotepath
 
 st = SftpTrans(ip, user, pw)
+print st.ip, st.user, st.pw
+
+with pysftp.Connection(st.ip, username=st.user, password=st.pw) as sf:
+    for k in files.keys():
+        sf.chdir(files[k])
+        sf.put(k)
+    sf.close()
