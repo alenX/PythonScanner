@@ -29,7 +29,8 @@ def addcolumn(file_cont, result_path_cont):
             result_path_cont.writelines(" end if;\n")
             result_path_cont.writelines(" end if;\n")
             result_path_cont.writelines(" end ;\n")
-            result_path_cont.writelines('---------------------------------------------\n')
+            result_path_cont.writelines("/\n")
+            # result_path_cont.writelines('---------------------------------------------\n')
     file_cont.close()
     result_path_cont.close()
 
