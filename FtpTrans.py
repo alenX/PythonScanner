@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 __author__ = 'wangss'
-import pysftp
 import os
+
+import paramiko
 
 
 class ConfContext(object):
@@ -40,8 +41,9 @@ class SftpTrans(object):
 
     @staticmethod
     def getoutputfile(changedfiles, oldpath, outpath):
+
         if changedfiles[0] == '.java':
-            return map(lambda x: x.replace(oldpath, outpath).replace('.java', '.calss'), changedfiles[1:])
+            return map(lambda x: x.replace(oldpath, outpath).replace('.java', '.class'), changedfiles[1:])
         else:
             return map(lambda x: x.replace(oldpath, outpath), changedfiles[1:])
 
@@ -66,7 +68,6 @@ changedjsp = SftpTrans.getchangefiles(localjspath, '.jsp')
 
 files = {}
 for j in SftpTrans.getoutputfile(changedjava, localjavapath, localoutjavapath):
-    print j
     temppath = ''.join(map(lambda x: '/' + x, localoutjavapath.split('/'))[:-2])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejavapath).split('/')[
                                                 :-1]))[1:]
@@ -83,10 +84,13 @@ for j in SftpTrans.getoutputfile(changedjsp, localjspath, localoutjspath):
     files[j] = remotepath
 
 st = SftpTrans(ip, user, pw)
-print st.ip, st.user, st.pw
-
-with pysftp.Connection(st.ip, username=st.user, password=st.pw) as sf:
-    for k in files.keys():
-        sf.chdir(files[k])
-        sf.put(k)
-    sf.close()
+s = paramiko.Transport(ip, 22)
+s.connect(username=user, password=pw)
+sftp = paramiko.SFTPClient.from_transport(s)
+for k in files.keys():
+    i = k.split('/')[-1]
+    local_dir = k.replace(i, '')[:-1]
+    remote_dir = files[k] + '/'
+    print os.path.join(local_dir, i).replace('\\', '/')
+    print os.path.join(remote_dir, i).replace('\\', '/')
+    sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
