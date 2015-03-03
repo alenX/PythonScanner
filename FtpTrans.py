@@ -12,8 +12,8 @@ class ConfContext(object):
     def parsecontext(self):
         with open(self.filepath, 'r') as fp:
             cfcont = {}
-            for i in fp:
-                l = i.split('=')
+            for d in fp:
+                l = d.split('=')
                 if len(l) != 2:
                     continue
                 if l[0] in ['ip', 'user', 'pw']:
@@ -99,5 +99,6 @@ if flag == 'Y' or flag == 'y':
         local_dir = k.replace(i, '')[:-1]
         remote_dir = files[k] + '/'
         sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
+    print '上传成功！'
 else:
     print '没有上传'
