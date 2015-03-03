@@ -87,11 +87,11 @@ st = SftpTrans(ip, user, pw)
 s = paramiko.Transport(ip, 22)
 s.connect(username=user, password=pw)
 sftp = paramiko.SFTPClient.from_transport(s)
-print '修改的文件数量合计为：' + str(len(files.keys()))
+print '修改的文件数量合计为：'.decode('utf-8') + str(len(files.keys()))
 for i in files.keys():
     print i
 
-print '是否确认全部上传服务器？Y or N \n '
+print '是否确认全部上传服务器？Y or N \n '.decode('utf-8')
 flag = raw_input()
 if flag == 'Y' or flag == 'y':
     for k in files.keys():
@@ -99,6 +99,6 @@ if flag == 'Y' or flag == 'y':
         local_dir = k.replace(i, '')[:-1]
         remote_dir = files[k] + '/'
         sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
-    print '上传成功！'
+    print '上传成功！'.decode('utf-8')
 else:
-    print '没有上传'
+    print '没有上传'.decode('utf-8')
