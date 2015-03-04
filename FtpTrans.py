@@ -73,13 +73,13 @@ for j in SftpTrans.getoutputfile(changedjava, localjavapath, localoutjavapath):
                                                 :-1]))[1:]
     files[j] = remotepath
 for j in SftpTrans.getoutputfile(changedjs, localjspath, localoutjspath):
-    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-2])[1:]
+    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-1])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejspath).split('/')[
                                                 :-1]))[1:]
     files[j] = remotepath
 
 for j in SftpTrans.getoutputfile(changedjsp, localjspath, localoutjspath):
-    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-2])[1:]
+    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-1])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejspath).split('/')[
                                                 :-1]))[1:]
     files[j] = remotepath
@@ -101,9 +101,9 @@ if flag == 'Y' or flag == 'y':
         remote_dir = files[k] + '/'
         try:
             sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
+            print '上传成功！'.decode('utf-8') + str(local_dir)
         except:
             info = sys.exc_info()
-            print '无法正常上传' + info[0] + "---" + info[1]
-    print '上传成功！'.decode('utf-8')
+            print '无法正常上传'.decode('utf-8') + str(info[0]) + "---" + str(info[1])
 else:
     print '没有上传'.decode('utf-8')
