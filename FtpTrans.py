@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 __author__ = 'wangss'
-import os
+import os, sys
 
 import paramiko
 
@@ -99,7 +99,11 @@ if flag == 'Y' or flag == 'y':
         i = k.split('/')[-1]
         local_dir = k.replace(i, '')[:-1]
         remote_dir = files[k] + '/'
-        sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
+        try:
+            sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
+        except:
+            info = sys.exc_info()
+            print '无法正常上传' + info[0] + "---" + info[1]
     print '上传成功！'.decode('utf-8')
 else:
     print '没有上传'.decode('utf-8')
