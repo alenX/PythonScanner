@@ -68,12 +68,12 @@ changedjsp = SftpTrans.getchangefiles(localjspath, '.jsp')
 
 files = {}
 for j in SftpTrans.getoutputfile(changedjava, localjavapath, localoutjavapath):
-    temppath = ''.join(map(lambda x: '/' + x, localoutjavapath.split('/'))[:-1])[1:]
+    temppath = ''.join(map(lambda x: '/' + x, localoutjavapath.split('/'))[:-2])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejavapath).split('/')[
                                                 :-1]))[1:]
     files[j] = remotepath
 for j in SftpTrans.getoutputfile(changedjs, localjspath, localoutjspath):
-    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-1])[1:]
+    temppath = ''.join(map(lambda x: '/' + x, localoutjspath.split('/'))[:-2])[1:]
     remotepath = ''.join(map(lambda x: '/' + x, j.replace(temppath, remotejspath).split('/')[
                                                 :-1]))[1:]
     files[j] = remotepath
