@@ -48,6 +48,15 @@ class SftpTrans(object):
             return map(lambda x: x.replace(oldpath, outpath), changedfiles[1:])
 
 
+print '选择要进行的操作'.decode('utf-8')
+print '#####################'
+print '1-上传修改文件的class文件'.decode('utf-8')
+print '2-获取本地修改文件的路径'.decode('utf-8')
+
+print '#####################'
+print '请输入操作序号'.decode('utf-8')
+
+opertype = raw_input()
 cf = ConfContext('F:/sftptrans.conf')
 confmap = cf.parsecontext()
 
@@ -84,26 +93,30 @@ for j in SftpTrans.getoutputfile(changedjsp, localjspath, localoutjspath):
                                                 :-1]))[1:]
     files[j] = remotepath
 
-st = SftpTrans(ip, user, pw)
-s = paramiko.Transport(ip, 22)
-s.connect(username=user, password=pw)
-sftp = paramiko.SFTPClient.from_transport(s)
-print '修改的文件数量合计为：'.decode('utf-8') + str(len(files.keys()))
-for i in files.keys():
-    print i
+if opertype == 1 or opertype == '1':
+    st = SftpTrans(ip, user, pw)
+    s = paramiko.Transport(ip, 22)
+    s.connect(username=user, password=pw)
+    sftp = paramiko.SFTPClient.from_transport(s)
+    print '修改的文件数量合计为：'.decode('utf-8') + str(len(files.keys()))
+    for i in files.keys():
+        print i
 
-print '是否确认全部上传服务器？Y or N \n '.decode('utf-8')
-flag = raw_input()
-if flag == 'Y' or flag == 'y':
-    for k in files.keys():
-        i = k.split('/')[-1]
-        local_dir = k.replace(i, '')[:-1]
-        remote_dir = files[k] + '/'
-        try:
-            sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
-            print '上传成功！'.decode('utf-8') + str(local_dir)
-        except:
-            info = sys.exc_info()
-            print '无法正常上传'.decode('utf-8') + str(info[0]) + "---" + str(info[1])
-else:
-    print '没有上传'.decode('utf-8')
+    print '是否确认全部上传服务器？Y or N \n '.decode('utf-8')
+    flag = raw_input()
+    if flag == 'Y' or flag == 'y':
+        for k in files.keys():
+            i = k.split('/')[-1]
+            local_dir = k.replace(i, '')[:-1]
+            remote_dir = files[k] + '/'
+            try:
+                sftp.put(os.path.join(local_dir, i), os.path.join(remote_dir, i))
+                print '上传成功！'.decode('utf-8') + str(local_dir)
+            except:
+                info = sys.exc_info()
+                print '无法正常上传'.decode('utf-8') + str(info[0]) + "---" + str(info[1])
+    else:
+        print '没有上传'.decode('utf-8')
+elif opertype == 2 or opertype == '2':
+    for i in files.keys():
+        print i
