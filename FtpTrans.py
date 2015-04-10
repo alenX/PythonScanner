@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 __author__ = 'wangss'
-import os, sys
+import os
+import sys
 
 import paramiko
 
